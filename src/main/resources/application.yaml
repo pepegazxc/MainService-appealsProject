@@ -2,5 +2,18 @@ server:
   port:
     8082
 
+
 token:
   key: ${JWT_KEY}
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password:
+    username:
+    url:
+
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
