@@ -1,0 +1,5 @@
+CREATE TABLE appeals(
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    appeal TEXT NOT NULL,
+    userIdentifier VARCHAR(50) NOT NULL
+)

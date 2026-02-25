@@ -1,5 +1,6 @@
 package main.controller;
 
+import main.dto.request.UserRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppealsController {
 
     @PostMapping("/write")
-    public String writeAnAppeal(){
-        return null;
+    public String writeAnAppeal(UserRequest request){
+        return "Your appeal has been submitted successfully!";
     }
 }
