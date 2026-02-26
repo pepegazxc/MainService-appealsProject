@@ -2,18 +2,21 @@ server:
   port:
     8082
 
-
-token:
-  key: ${JWT_KEY}
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     driver-class-name: org.postgresql.Driver
     password: ${POSTGRES_PASSWORD}
     username: ${POSTGRES_USERNAME}
     name: ${POSTGRES_DB}
+    url: ${POSTGRES_URL}
 
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
+
+token:
+  key: ${JWT_KEY}

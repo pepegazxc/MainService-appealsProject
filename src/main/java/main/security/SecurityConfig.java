@@ -26,7 +26,7 @@ public class SecurityConfig {
         http.
                 csrf(token -> token.disable()).
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/write").hasRole("USER_ROLE")
+                        .requestMatchers("/write").hasRole("ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth -> oauth
