@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.SecretKey;
@@ -22,17 +24,30 @@ public class SecurityConfig {
     private String jwtSecret;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.
                 csrf(token -> token.disable()).
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/write").hasRole("ROLE_USER")
+                        .requestMatchers("/write").hasRole("USER")
                         .anyRequest().authenticated()
                 )
+
                 .oauth2ResourceServer(oauth -> oauth
                         .jwt(Customizer.withDefaults()));
 
         return http.build();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter(){
+        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
+        converter.setAuthoritiesClaimName("role");
+        converter.setAuthorityPrefix("");
+
+        JwtAuthenticationConverter jwtAuthConverter = new JwtAuthenticationConverter();
+        jwtAuthConverter.setJwtGrantedAuthoritiesConverter(converter);
+
+        return jwtAuthConverter;
     }
 
     @Bean
