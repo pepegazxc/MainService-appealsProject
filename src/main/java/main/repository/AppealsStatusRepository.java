@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface AppealsStatusRepository extends JpaRepository<AppealsStatusEntity, Long> {
-    Optional<AppealsStatusEntity> findIdByStatusName(String status);
+    Optional<AppealsStatusEntity> findByStatusName(String status);
 }
