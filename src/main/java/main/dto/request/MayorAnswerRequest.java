@@ -7,11 +7,10 @@ import lombok.Data;
 import main.dto.enums.Status;
 
 @Data
-public class MayorAnswerAppeal {
+public class MayorAnswerRequest {
     @NotNull
     @NotBlank
     private String answer;
-
     @NotBlank
     @NotNull
     private Status status;
