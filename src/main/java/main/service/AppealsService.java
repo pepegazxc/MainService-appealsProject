@@ -29,11 +29,9 @@ public class AppealsService {
     }
 
     @Transactional
-    public void saveAppeal(UserRequest request){
+    public void saveAppeal(UserRequest request) {
         AppealsStatusEntity status = buildAppealStatus();
-
         CitiesEntity city = buildCity(request);
-
         AppealsEntity appeals = buildAppeal(request, status, city);
 
         appealsRepository.save(appeals);
