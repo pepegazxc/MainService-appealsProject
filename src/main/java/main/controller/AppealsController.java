@@ -1,6 +1,7 @@
 package main.controller;
 
 import jakarta.validation.Valid;
+import main.dto.request.MayorAnswerAppeal;
 import main.dto.request.UserRequest;
 import main.service.AppealsService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ public class AppealsController {
     }
 
     @PostMapping("/appeal/answer")
-    public void answerToAppeal(){
+    public void answerToAppeal(@Valid @RequestBody MayorAnswerAppeal answer){
 
     }
 }
