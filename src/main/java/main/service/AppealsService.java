@@ -45,7 +45,7 @@ public class AppealsService {
                 .appealsStatus(status)
                 .resolvedAt(null)
                 .city(city)
-                .email(user.getEmail())
+                .email(user.email())
                 .build();
     }
 
