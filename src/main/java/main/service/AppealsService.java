@@ -1,10 +1,13 @@
 package main.service;
 
+import lombok.RequiredArgsConstructor;
 import main.dto.enums.Cities;
+import main.dto.feign.InternalUserDto;
 import main.dto.request.UserRequest;
 import main.entity.AppealsEntity;
 import main.entity.AppealsStatusEntity;
 import main.entity.CitiesEntity;
+import main.feign.UserClient;
 import main.repository.AppealsRepository;
 import main.repository.AppealsStatusRepository;
 import main.repository.CitiesRepository;
@@ -16,17 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 @Service
+@RequiredArgsConstructor
 public class AppealsService {
 
     private final AppealsRepository appealsRepository;
     private final AppealsStatusRepository appealsStatusRepository;
     private final CitiesRepository citiesRepository;
-
-    public AppealsService(AppealsRepository appealsRepository, AppealsStatusRepository appealsStatusRepository, CitiesRepository citiesRepository) {
-        this.appealsRepository = appealsRepository;
-        this.appealsStatusRepository = appealsStatusRepository;
-        this.citiesRepository = citiesRepository;
-    }
+    private final UserClient userClient;
 
     @Transactional
     public void saveAppeal(UserRequest request) {
@@ -38,12 +37,15 @@ public class AppealsService {
     }
 
     private AppealsEntity buildAppeal(UserRequest request, AppealsStatusEntity status, CitiesEntity city){
+        String userId = getUserIdentifier();
+        InternalUserDto user = userClient.getEmail(userId);
         return AppealsEntity.builder()
                 .appeal(request.getAppeal())
-                .userIdentifier(getUserIdentifier())
+                .userIdentifier(userId)
                 .appealsStatus(status)
                 .resolvedAt(null)
                 .city(city)
+                .email(user.getEmail())
                 .build();
     }
 

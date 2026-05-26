@@ -37,4 +37,6 @@ public class AppealsEntity {
     @Column(name = "resolved_at")
     private Timestamp resolvedAt;
 
+    private String email;
+
 }

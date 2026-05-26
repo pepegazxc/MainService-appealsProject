@@ -23,3 +23,9 @@ spring:
 
 token:
   key: ${JWT_KEY}
+
+internal:
+  secret: ${INTERNAL_SECRET}
+
+service:
+  url: ${REG_URL}
