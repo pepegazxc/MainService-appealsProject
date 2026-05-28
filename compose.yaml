@@ -1,4 +1,13 @@
 services:
+  kafka:
+    build: .
+    networks:
+      - kafka-network
+    env_file:
+      - .env
+    environment:
+      - KAFKA_BROKER=kafka:9092
+
   postgres:
     image: postgres
     restart: always
