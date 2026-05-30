@@ -7,7 +7,8 @@ import main.dto.request.UserRequest;
 import main.entity.AppealsEntity;
 import main.entity.AppealsStatusEntity;
 import main.entity.CitiesEntity;
-import main.feign.UserClient;
+import main.feign.RegistrationServiceClient;
+import main.producer.KafkaProducer;
 import main.repository.AppealsRepository;
 import main.repository.AppealsStatusRepository;
 import main.repository.CitiesRepository;
@@ -25,7 +26,8 @@ public class AppealsService {
     private final AppealsRepository appealsRepository;
     private final AppealsStatusRepository appealsStatusRepository;
     private final CitiesRepository citiesRepository;
-    private final UserClient userClient;
+    private final RegistrationServiceClient userClient;
+    private final KafkaProducer kafkaProducer;
 
     @Transactional
     public void saveAppeal(UserRequest request) {
@@ -34,6 +36,13 @@ public class AppealsService {
         AppealsEntity appeals = buildAppeal(request, status, city);
 
         appealsRepository.save(appeals);
+
+        kafkaProducer.publicateNewMessageForMayor(
+                appeals.getEmail(),
+                appeals.getId(),
+                appeals.getUserIdentifier(),
+                appeals.getAppeal()
+        );
     }
 
     private AppealsEntity buildAppeal(UserRequest request, AppealsStatusEntity status, CitiesEntity city){
