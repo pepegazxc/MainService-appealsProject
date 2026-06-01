@@ -1,8 +1,9 @@
 services:
-  notification-service:
+  main-service:
     build: .
     networks:
       - kafka-network
+      - app-network
     env_file:
       - .env
     environment:
