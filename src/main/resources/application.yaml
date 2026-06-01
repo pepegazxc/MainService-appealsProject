@@ -19,7 +19,7 @@ spring:
     password: ${POSTGRES_PASSWORD}
     username: ${POSTGRES_USERNAME}
     name: ${POSTGRES_DB}
-    url: ${POSTGRES_URL}
+    url: ${POSTGRES_URL:${POSTGRES_DOCKER_URL}}
 
   jpa:
     database: postgresql
@@ -37,4 +37,4 @@ internal:
   secret: ${INTERNAL_SECRET}
 
 service:
-  url: ${REG_URL}
+  url: ${REG_URL:${REG_DOCKER_URL}}
