@@ -8,7 +8,10 @@ import main.dto.enums.Status;
 
 @Data
 public class MayorAnswerRequest {
+    @NotBlank
+    private String userEmail;
     @NotNull
+    private Long appealId;
     @NotBlank
     private String answer;
     @NotBlank
