@@ -22,9 +22,4 @@ public class AppealsController {
         appealsService.saveAppeal(request);
         return "Your appeal has been submitted successfully!";
     }
-
-    @PostMapping("/appeal/answer")
-    public void answerToAppeal(@Valid @RequestBody MayorAnswerRequest answer){
-
-    }
 }

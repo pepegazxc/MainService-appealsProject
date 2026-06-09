@@ -3,6 +3,7 @@ package main.service;
 import lombok.RequiredArgsConstructor;
 import main.dto.enums.Cities;
 import main.dto.feign.InternalUserDto;
+import main.dto.request.MayorAnswerRequest;
 import main.dto.request.UserRequest;
 import main.entity.AppealsEntity;
 import main.entity.AppealsStatusEntity;
@@ -28,6 +29,11 @@ public class AppealsService {
     private final CitiesRepository citiesRepository;
     private final RegistrationServiceClient userClient;
     private final KafkaProducer kafkaProducer;
+
+    @Transactional
+    public void appealResponse(Long appealId, MayorAnswerRequest request){
+        //TO DO: ADD IMPLEMENTATION OF THE METHOD
+    }
 
     @Transactional
     public void saveAppeal(UserRequest request) {
