@@ -23,3 +23,9 @@ services:
       - pgdata:/var/lib/postgresql
 volumes:
   pgdata:
+
+networks:
+  app-network:
+    driver: bridge
+  kafka-network:
+    driver: bridge
