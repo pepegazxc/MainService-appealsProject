@@ -37,7 +37,8 @@ public class AppealsService {
         AppealsStatusEntity status = buildAppealStatus(request.getStatus());
         AppealsEntity appeals = findAppealById(appealId);
         setNewAppealData(appeals, status);
-        // TO DO: ADD KAFKA RECORD
+
+        kafkaProducer.publicateNewAppealResponse(request.getAnswer(), request.getUserEmail(), request.getStatus());
     }
 
     @Transactional
