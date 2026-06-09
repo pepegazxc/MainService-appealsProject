@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "appeals")
@@ -35,7 +37,7 @@ public class AppealsEntity {
     private AppealsStatusEntity appealsStatus;
 
     @Column(name = "resolved_at")
-    private Timestamp resolvedAt;
+    private LocalDateTime resolvedAt;
 
     private String email;
 

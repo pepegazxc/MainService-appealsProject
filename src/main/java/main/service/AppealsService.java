@@ -2,6 +2,7 @@ package main.service;
 
 import lombok.RequiredArgsConstructor;
 import main.dto.enums.Cities;
+import main.dto.enums.Status;
 import main.dto.feign.InternalUserDto;
 import main.dto.request.MayorAnswerRequest;
 import main.dto.request.UserRequest;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service
@@ -32,7 +34,10 @@ public class AppealsService {
 
     @Transactional
     public void appealResponse(Long appealId, MayorAnswerRequest request){
-        //TO DO: ADD IMPLEMENTATION OF THE METHOD
+        AppealsStatusEntity status = buildAppealStatus(request.getStatus());
+        AppealsEntity appeals = findAppealById(appealId);
+        setNewAppealData(appeals, status);
+        // TO DO: ADD KAFKA RECORD
     }
 
     @Transactional
@@ -64,6 +69,11 @@ public class AppealsService {
                 .build();
     }
 
+    private AppealsStatusEntity buildAppealStatus(Status status){
+        return appealsStatusRepository.findByStatusName(status.toString())
+                .orElseThrow(() -> new IllegalStateException());
+    }
+
     private AppealsStatusEntity buildAppealStatus(){
         return appealsStatusRepository.findByStatusName("NEW")
                 .orElseThrow(() -> new IllegalStateException());
@@ -84,8 +94,19 @@ public class AppealsService {
         return matches.getId();
     }
 
+    private AppealsEntity setNewAppealData(AppealsEntity appeals, AppealsStatusEntity status){
+        appeals.setAppealsStatus(status);
+        appeals.setResolvedAt(LocalDateTime.now());
+        return appeals;
+    }
+
     private String getUserIdentifier(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
+    }
+
+    private AppealsEntity findAppealById(Long id){
+        return appealsRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException());
     }
 }
