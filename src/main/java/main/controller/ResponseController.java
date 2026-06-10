@@ -15,7 +15,7 @@ public class ResponseController {
 
     private final AppealsService service;
 
-    @PostMapping("/appeal/{appealId}/answer")
+    @PostMapping("/{appealId}/answer")
     public String answerToAppeal(@Valid @RequestBody MayorAnswerRequest answer, @PathVariable Long appealId){
         service.appealResponse(appealId, answer);
         return "Changes have been made";

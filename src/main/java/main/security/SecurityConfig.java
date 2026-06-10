@@ -29,7 +29,7 @@ public class SecurityConfig {
                 csrf(token -> token.disable()).
                 authorizeHttpRequests(request -> request
                         .requestMatchers("/write").hasRole("USER")
-                        .requestMatchers("/appeal/answer").hasRole("MAYOR")
+                        .requestMatchers("/{appealId}/answer").hasRole("MAYOR")
                         .anyRequest().authenticated()
                 )
 
